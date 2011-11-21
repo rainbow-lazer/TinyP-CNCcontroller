@@ -133,8 +133,9 @@ class CNC {
                         //send out the the board
                         if( buffer.length > 4){
                               String addme = new String(buffer);
-                              if( output.length() > 2000 ) //chop off the oldest 100 chars
-                                    output = output.substring( 100, output.length );
+                              if( output.length() > 4000 ){ //chop off the oldest 100 chars
+                                    output = output.substring( 100, output.length() );
+                              }
                               output += addme;
                               buffer = new char[0];
                         }
