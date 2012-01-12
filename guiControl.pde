@@ -30,7 +30,7 @@ void guiSetup() {
       portControls.setColorValue(0xff000000);
 
       //output window
-      serialOutput = conDepControls.addTextarea("output", "", 5, 30, width - 200, height/2 - 30 );
+      serialOutput = conDepControls.addTextarea("output", "", 5, 30, width - 200, 400 );
       serialOutput.enableColorBackground();
       serialOutput.setColorBackground(0xffFFFFFF);
 
@@ -54,19 +54,22 @@ void guiSetup() {
       eStop.setColorBackground(0xffDD0000);
 
       //command input line
-      serialInput = conDepControls.addTextfield("manual input", 5, height/2 + 10, 200, 20);
+      serialInput = conDepControls.addTextfield("manual input", 5, 440, 200, 20);
       //serialInput.keepFocus( true );
 
       //submit button
-      submit = conDepControls.addButton("submit", 1, 210, height/2 + 10, 80, 20);
+      submit = conDepControls.addButton("submit", 1, 210, 440, 80, 20);
+      
+      //paste button
+      paste = conDepControls.addButton("paste", 1, 300, 440, 35, 20);
 
       //file path text (read-only)
-      filePath = conDepControls.addTextfield("file path", 5, height/2 + 50, 200, 20);
+      filePath = conDepControls.addTextfield("file path", 5, 480, 200, 20);
       filePath.keepFocus( false );
       //file load button
-      loadFile = conDepControls.addButton("loadFile", 1, 210, height/2 + 50, 80, 20);
+      loadFile = conDepControls.addButton("loadFile", 1, 210, 480, 80, 20);
       //file run button
-      runFile = conDepControls.addButton("runFile", 1, 300, height/2 + 50, 80, 20);
+      runFile = conDepControls.addButton("runFile", 1, 300, 480, 80, 20);
 
       //units select
       unitSelect = conDepControls.addRadioButton("unitSelect", width - 170, 410);
@@ -162,6 +165,11 @@ void submit() {
       }
 }
 
+//paste from clipboard
+void paste(){
+      serialInput.setText( serialInput.getText() + clipBoard.pasteString() );       
+}
+
 //control events fire when dropdowns/radios are selected, keys are pushed, etc 
 void controlEvent(ControlEvent theEvent) {
       //dropdown list operations
@@ -202,6 +210,7 @@ void disconnect() {
 void connect(){
      if( myCNC.connect() ){
            controlsVisible(conDepControls,true);
+           myCNC.init();
      }
 } 
 

@@ -1,0 +1,127 @@
+$$
+Profile 1.00 [P_1.00]
+Version 0.90 [V_0.90]
+Motor 1 - Mapped to axis        0 [0=X,1=Y...] $1MA0
+Motor 1 - Step angle         1.80 degrees      $1SA1.80
+Motor 1 - Travel/rev        0.063 inches       $1TR0.063
+Motor 1 - Microsteps            2 [1,2,4,8]    $1MI2
+Motor 1 - Motor polarity        0 [0,1]        $1PO0
+Motor 1 - Power mgmt mode       1 [0,1]        $1PW1
+Motor 2 - Mapped to axis        1 [0=X,1=Y...] $2MA1
+Motor 2 - Step angle         1.80 degrees      $2SA1.80
+Motor 2 - Travel/rev        0.063 inches       $2TR0.063
+Motor 2 - Microsteps            2 [1,2,4,8]    $2MI2
+Motor 2 - Motor polarity        0 [0,1]        $2PO0
+Motor 2 - Power mgmt mode       1 [0,1]        $2PW1
+Motor 3 - Mapped to axis        2 [0=X,1=Y...] $3MA2
+Motor 3 - Step angle         1.80 degrees      $3SA1.80
+Motor 3 - Travel/rev        0.049 inches       $3TR0.049
+Motor 3 - Microsteps            8 [1,2,4,8]    $3MI8
+Motor 3 - Motor polarity        0 [0,1]        $3PO0
+Motor 3 - Power mgmt mode       1 [0,1]        $3PW1
+Motor 4 - Mapped to axis        3 [0=X,1=Y...] $4MA3
+Motor 4 - Step angle         1.80 degrees      $4SA1.80
+Motor 4 - Travel/rev        0.709 inches       $4TR0.709
+Motor 4 - Microsteps            8 [1,2,4,8]    $4MI8
+Motor 4 - Motor polarity        0 [0,1]        $4PO0
+Motor 4 - Power mgmt mode       1 [0,1]        $4PW1
+X axis - Axis mode              1 [0-10]       $XMO1
+X axis - Seek rate          35.00 in/min       $XSR35.00
+X axis - Feed rate          30.00 in/min       $XFR30.00
+X axis - Travel hard limit     16 inches       $XTH16
+X axis - Travel soft limit     15 inches       $XTS15
+X axis - Jerk maximum     1000000 in/min^3     $XJM1000000
+X axis - Cornering delta   0.0020 in           $XCD0.0020
+X axis - Limit switch mode      1 [0,1]        $XLI1
+X axis - Homing enabled         1 [0,1]        $XHE1
+X axis - Homing seek rate   23.62 in/min       $XHR23.62
+X axis - Homing close rate   0.39 in/min       $XHC0.39
+X axis - Homing offset      -7.87 inches       $XHO-7.87
+X axis - Homing backoff      0.20 inches       $XHB0.20
+Y axis - Axis mode              1 [0-10]       $YMO1
+Y axis - Seek rate          10.00 in/min       $YSR10.00
+Y axis - Feed rate           5.00 in/min       $YFR5.00
+Y axis - Travel hard limit      7 inches       $YTH7
+Y axis - Travel soft limit      7 inches       $YTS7
+Y axis - Jerk maximum     1000000 in/min^3     $YJM1000000
+Y axis - Cornering delta   0.0020 in           $YCD0.0020
+Y axis - Limit switch mode      1 [0,1]        $YLI1
+Y axis - Homing enabled         1 [0,1]        $YHE1
+Y axis - Homing seek rate   23.62 in/min       $YHR23.62
+Y axis - Homing close rate   0.39 in/min       $YHC0.39
+Y axis - Homing offset      -3.43 inches       $YHO-3.43
+Y axis - Homing backoff      0.20 inches       $YHB0.20
+Z axis - Axis mode              1 [0-10]       $ZMO1
+Z axis - Seek rate          19.69 in/min       $ZSR19.69
+Z axis - Feed rate          19.69 in/min       $ZFR19.69
+Z axis - Travel hard limit      3 inches       $ZTH3
+Z axis - Travel soft limit      3 inches       $ZTS3
+Z axis - Jerk maximum     1968504 in/min^3     $ZJM1968504
+Z axis - Cornering delta   0.0020 in           $ZCD0.0020
+Z axis - Limit switch mode      1 [0,1]        $ZLI1
+Z axis - Homing enabled         1 [0,1]        $ZHE1
+Z axis - Homing seek rate   19.69 in/min       $ZHR19.69
+Z axis - Homing close rate   0.39 in/min       $ZHC0.39
+Z axis - Homing offset      -1.46 inches       $ZHO-1.46
+Z axis - Homing backoff      0.20 inches       $ZHB0.20
+A axis - Axis mode              3 [0-10]       $AMO3
+A axis - Seek rate          12000 deg/min      $ASR12000
+A axis - Feed rate          12000 deg/min      $AFR12000
+A axis - Travel hard limit     -1 degrees      $ATH-1
+A axis - Travel soft limit     -1 degrees      $ATS-1
+A axis - Jerk maximum    50000000 deg/min^3    $AJM50000000
+A axis - Cornering delta   0.0020 in           $ACD0.0020
+A axis - Radius value       0.394 inches       $ARA0.394
+A axis - Limit switch mode      1 [0,1]        $ALI1
+A axis - Homing enabled         1 [0,1]        $AHE1
+A axis - Homing seek rate   12000 deg/min      $AHR12000.00
+A axis - Homing close rate    360 deg/min      $AHC360.00
+A axis - Homing offset          0 degrees      $AHO0.00
+A axis - Homing backoff         5 degrees      $AHB5.00
+B axis - Axis mode              3 [0-10]       $BMO3
+B axis - Seek rate          12000 deg/min      $BSR12000
+B axis - Feed rate          12000 deg/min      $BFR12000
+B axis - Travel hard limit     -1 degrees      $BTH-1
+B axis - Travel soft limit     -1 degrees      $BTS-1
+B axis - Jerk maximum    50000000 deg/min^3    $BJM50000000
+B axis - Cornering delta   0.0020 in           $BCD0.0020
+B axis - Radius value       0.394 inches       $BRA0.394
+B axis - Limit switch mode      1 [0,1]        $BLI1
+B axis - Homing enabled         0 [0,1]        $BHE0
+B axis - Homing seek rate   12000 deg/min      $BHR12000.00
+B axis - Homing close rate    360 deg/min      $BHC360.00
+B axis - Homing offset          0 degrees      $BHO0.00
+B axis - Homing backoff         5 degrees      $BHB5.00
+C axis - Axis mode              3 [0-10]       $CMO3
+C axis - Seek rate          12000 deg/min      $CSR12000
+C axis - Feed rate          12000 deg/min      $CFR12000
+C axis - Travel hard limit     -1 degrees      $CTH-1
+C axis - Travel soft limit     -1 degrees      $CTS-1
+C axis - Jerk maximum    50000000 deg/min^3    $CJM50000000
+C axis - Cornering delta   0.0020 in           $CCD0.0020
+C axis - Radius value       0.394 inches       $CRA0.394
+C axis - Limit switch mode      1 [0,1]        $CLI1
+C axis - Homing enabled         0 [0,1]        $CHE0
+C axis - Homing seek rate   12000 deg/min      $CHR12000.00
+C axis - Homing close rate    360 deg/min      $CHC360.00
+C axis - Homing offset          0 degrees      $CHO0.00
+C axis - Homing backoff         5 degrees      $CHB5.00
+Gcode: Units {G20,G21}         21 [20,21]      $GU21
+Gcode: Plane {G17,G18,G19}     17 [17,18,19]   $GL17
+Gcode: Path  {G61,G61.1,G64} 64.0 [61,61.1,64] $GP64.0
+Gcode: Distance Mode {G90,G91} 90 [90,91]      $GD90
+Enable Acceleration             1 [0,1]        $EA1
+Junction acceleration        2000 in/min^2     $JA2000
+Min line segment length    0.0031 inches       $ML0.0031
+Min arc segment length     0.0039 inches       $MC0.0039
+Min segment time            10000 uSec         $MT10000
+Homing mode                     0 [0,1]        $HM0
+Convert LF to CR LF (outgoing)  0 [0,1]        $EC0
+Ignore Incoming CR              0 [0,1]        $IC0
+Ignore Incoming LF              0 [0,1]        $IL0
+Enable Xon/Xoff Flow Control    1 [0,1]        $EX1
+Enable Echo                     1 [0,1]        $EE1
+Status Report Enable            1 [0,1,2]      $SE1
+Status Report Interval         20 ms           $SI20
+Profile 0.90 [0.90]
+tinyg[inch] ok> 

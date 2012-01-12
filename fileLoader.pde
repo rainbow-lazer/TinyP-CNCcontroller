@@ -5,6 +5,7 @@ void loadFile() {
       String fileName = ourFile.getName();
       
       if ( !fileName.equals("data") ) { 
+            println( fileName );
             filePath.setText( fileName );
             myCNC.setFileToRun( ourFile );
       }   
@@ -21,7 +22,7 @@ File getFile() {
       } 
 
       // create a file chooser 
-      final JFileChooser fc = new JFileChooser(); 
+      final JFileChooser fc = new JFileChooser( dataPath("") ); 
 
       // in response to a button click: 
       int returnVal = fc.showOpenDialog(this); 

@@ -13,3 +13,9 @@ fixed some memory-bogging issues that caused longer geode files to send incorrec
 
 tweaked the geode streaming function to work better
 
+jan-11-2012
+#############
+tweaked the jog rates to favor inches, added one standard jog function in the CNC object model w/ forced return to absolute distance mode, made text input a little more sane
+
+TO DO:
+-make the G90 commands in the jog function not get logged in the memory.

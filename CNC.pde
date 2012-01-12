@@ -31,6 +31,7 @@ class CNC {
       float xPos;
       float yPos;
       float zPos;
+      float velocity;
       
       //serial feedback from the board
       int linebreak = 62; //where to end the serial output buffer [>]
@@ -38,6 +39,7 @@ class CNC {
       char[] buffer = { char(10), char(10) }; //character buffer
       String stateInfo; //serial output for specific board state info (position, units, etc)
       boolean recordStateInfo = false;
+      boolean recordLineFeed = false;
       
       // a list of the last commands sent to the board
       ArrayList lastCmds = new ArrayList(); 
@@ -45,9 +47,9 @@ class CNC {
       
       //info for running gcode files
       File fileToRun;
-      boolean runFile = false;
+      boolean streaming = false;
       int fileIndex = 0;
-      String[] lines;
+      String[] cmdQ;
 
 
       CNC( PApplet _parent ) {
@@ -90,10 +92,8 @@ class CNC {
             serial = new Serial(parent, Serial.list()[portID], 115200, 'N', 8, 1.0);
             //serial.bufferUntil( linebreak );
             connected = true;
-            write( units );
-            write("?");
-            //write("$$");
-            //there doesn't seem to be a simple way to test for an active connection, but if there were I'd calli here before returning. 
+            
+            //there doesn't seem to be a simple way to test for an active connection, but if there were I'd call it here before returning. 
             return connected;
       }
 
@@ -127,14 +127,15 @@ class CNC {
             if( connected ){
                   while ( serial.available() > 0 ){
                         char myChar = serial.readChar();
+                        //println( myChar + " " + int( myChar ) );
                         wasRead = true;
                         buffer = append( buffer, myChar );
                   
-                        //send out the the board
+                        //send output info to the GUI in chunks
                         if( buffer.length > 4){
                               String addme = new String(buffer);
-                              if( output.length() > 4000 ){ //chop off the oldest 100 chars
-                                    output = output.substring( 100, output.length() );
+                              if( output.length() > 10000 ){ //10k character limit for board output
+                                    output = output.substring( 100, output.length() );//chop off the oldest 100 chars
                               }
                               output += addme;
                               buffer = new char[0];
@@ -153,6 +154,8 @@ class CNC {
                               recordStateInfo = false;
                               parseStateInfo();
                               stateInfo = new String();
+                        } else if( myChar == char( 62 ) ){// ">" end of line
+                              recordLineFeed = true;
                         }
                         
                         if( recordStateInfo ){
@@ -198,6 +201,12 @@ class CNC {
             if ( connected ) {
                   if( transmit ) {
                         
+                        //start doing tests to parse gCode
+                        //if( hasCommand( 'G', input ) ){
+                              //println("this line '" + input + "' has a Gcommand");
+                        //}
+                        
+                        
                         //record commands
                         lastCmds.add(1, input);
                         if ( lastCmds.size() > 20 ) {
@@ -229,7 +238,7 @@ class CNC {
       //grab the boardstate info & parse it. this is super ghetto; the board actually outputs a JSON object
       // & could be parsed more elegantly
       void parseStateInfo(){ 
-            String[] stateInfoParsed = split( stateInfo, "xyz:[" ); // convert from something like: ln:34, xzy:[123.2,1.213,0.00]
+            String[] stateInfoParsed = split( stateInfo, "\"xyz\":[" ); // convert from something like: ln:34, xzy:[123.2,1.213,0.00]
             if( stateInfoParsed.length > 1 ){
                   String[] xyzInfo = split( stateInfoParsed[1], "," );     
                   xyzInfo[2] = xyzInfo[2].substring( 0, xyzInfo[2].length() - 1 );
@@ -291,7 +300,35 @@ class CNC {
       set specific machine settings
 
 ######################################################################## */
-
+      
+      //jog the thang
+      void jog( String axis, int dir, float step ){
+            
+            if( axis.equals( "X" ) ){
+                  write( "G91 X" + ( step * dir ) );
+            } else if( axis.equals( "Y" ) ){
+                  write( "G91 Y" + ( step * dir ) );      
+            } else if( axis.equals( "Z" ) ){ 
+                  write( "G91 Z" + ( step * dir ) );  
+            }   
+            
+            //switch back to absolute distance mode
+            write( "G90" );
+      }
+      
+      //initial settings when first connecting to the board
+      void init(){
+           println("init");
+           write("!");
+           delay( 500 );
+           setConfigs();
+           delay( 500 );
+           write( "?" );
+           delay( 500 );
+           write( "G0" );
+             
+      }
+      
       //send config settings to the board
       void setConfigs(){ 
           println( "writing :" + units ); 
@@ -304,7 +341,13 @@ class CNC {
       
       //stop immediately
       void eStop(){
-            write("!");
+            if( streaming && transmit ) { //if a file is being streamed, add it to the top of the command queue
+                  String[] stop = { "!" };
+                  cmdQ = concat( stop, cmdQ );            
+            }
+            else {
+                  write("!");
+            }
             setConfigs(); //try to reset modal stuff like units
       }
 
@@ -346,26 +389,29 @@ class CNC {
       //record the file we might run
       void setFileToRun( File potentialFile ) {
             fileToRun = potentialFile;
-      }
+            cmdQ = loadStrings(fileToRun);
+            //buildPreview( cmdQ );
+      } 
 
       //run a file 
       void runFile() {
             fileIndex = 0;
-            lines = loadStrings(fileToRun);
-            runFile = true;
             println("trying to send " + fileToRun.getName() );
-            streamGCode();
+            write( "G90" ); //switch to absolute coordinates
+            streaming = true;
       }
       
-      //send the next line of a gcode file
+      //send the next line of a gcode file, using6 XON/XOFF to control data flow
      void streamGCode() {
-            if( runFile ){
+            if( streaming ){
                   if ( transmit ) { 
-                        if (fileIndex < lines.length) {
-                              String cmd = lines[fileIndex];
-                              if ( cmd.charAt(0) != char(59)) {
-                                    //println(cmd);
-                                    write( cmd );
+                        if (fileIndex < cmdQ.length) {
+                              String cmd = cmdQ[fileIndex];
+                              if( cmd.length() > 0 ){
+                                    if ( cmd.charAt(0) != char(59)) {
+                                          //println(cmd);
+                                          write( cmd );
+                                    }
                               }
                               else {
                                     write( " " );
@@ -373,7 +419,7 @@ class CNC {
                               fileIndex++;
                         } 
                         else {
-                              runFile = false;
+                              streaming = false;
                               fileIndex = 0;
                         }
                   } //else
